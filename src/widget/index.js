@@ -152,4 +152,4 @@ import './styles/widget.scss';
 
 // ES6 експорт для модульного використання (якщо потрібно)
 export { GewurzWidget, CONFIG } from './Widget.js';
-export { getApiUrl } from './config.js';
+export { CONFIG} from './config.js';
