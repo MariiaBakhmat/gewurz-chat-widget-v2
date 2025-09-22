@@ -14,8 +14,14 @@ module.exports = (env, argv) => {
     // Куди складати готові файли
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: '[name].min.js', // widget.min.js
-      clean: true // очищати dist папку
+      filename: '[name].min.js',
+      clean: true,
+      // ВИПРАВЛЕННЯ: експорт в глобальний scope
+      library: {
+        name: 'GewurzWidgetBundle',
+        type: 'window'
+      },
+      globalObject: 'window'
     },
     
     // Як обробляти різні типи файлів
@@ -88,8 +94,8 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         template: './src/chat/chat.html',
         filename: 'chat.html',
-        chunks: ['widget'], // Підключає тільки widget.min.js
-        inject: 'body'
+        chunks: [], // НЕ підключати widget.js в chat.html
+        inject: false
       })
     ],
     
@@ -99,22 +105,21 @@ module.exports = (env, argv) => {
     // Source maps для дебагу (тільки в dev режимі)
     devtool: isProduction ? false : 'eval-source-map',
     
-    // Налаштування dev сервера
+    // Налаштування dev сервера - ВИПРАВЛЕНО
     devServer: {
       static: {
         directory: path.join(__dirname, 'dist'),
       },
       hot: true,
       port: 3000,
-      open: true, // Автоматично відкриває браузер
+      open: true
     },
     
     // Оптимізація для продакшну
     optimization: {
       minimize: isProduction,
-      splitChunks: {
-        chunks: 'all',
-      }
+      // ВИПРАВЛЕННЯ: не розділяти код на chunks
+      splitChunks: false
     }
   };
 };
