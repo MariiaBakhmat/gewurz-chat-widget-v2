@@ -1,1 +1,31 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+  <title>Gewürz Guru Chat</title>
 
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body>
+  <div id="gwz-chat-app" class="gwz-chat">
+    <div class="gwz-chat__header">
+      <h1>Gewürz Guru Chat</h1>
+    </div>
+    <div id="gwz-chat-history" class="gwz-chat__history"></div>
+    <div class="gwz-chat__input-area">
+      <input 
+        id="gwz-user-input" 
+        type="text" 
+        class="gwz-chat__input" 
+        placeholder="Schreib eine Nachricht..." />
+      <button id="gwz-send-button" class="gwz-chat__send-btn" title="Absenden">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Webpack буде автоматично вставляти скрипти тут -->
+</body>
+</html>
