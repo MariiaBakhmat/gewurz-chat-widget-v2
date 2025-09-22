@@ -1,1 +1,405 @@
+// SCSS змінні
+$widget-z-index: 2147483647;
+$widget-primary-color: #DBC59D;
+$widget-secondary-color: #003836;
+$widget-button-size: 60px;
+$widget-button-size-mobile: 72px;
+$widget-chat-width: 400px;
+$widget-chat-height: 522px;
 
+// Головний контейнер віджета
+.gwz-widget {
+  // CSS reset тільки для віджета
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: none;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+    text-decoration: none;
+    list-style: none;
+    border-radius: 0;
+    box-shadow: none;
+    transform: none;
+    transition: none;
+    animation: none;
+    opacity: 1;
+    visibility: visible;
+    display: block;
+    position: static;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: auto;
+    height: auto;
+    min-width: 0;
+    min-height: 0;
+    max-width: none;
+    max-height: none;
+    overflow: visible;
+    z-index: auto;
+  }
+
+  // Базові стилі контейнера
+  position: fixed;
+  bottom: var(--desktop-button-bottom, 60px);
+  right: var(--desktop-button-right, 125px);
+  left: var(--desktop-button-left, auto);
+  top: var(--desktop-button-top, auto);
+  z-index: $widget-z-index;
+  font-family: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+  direction: ltr;
+  text-align: left;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  display: block;
+  float: none;
+  clear: none;
+  overflow: visible;
+  transform: none;
+
+  // Кнопка віджета
+  &__button {
+    position: static;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $widget-button-size;
+    height: $widget-button-size;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    box-shadow: none;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    transform: none;
+    float: none;
+    clear: none;
+    vertical-align: baseline;
+    z-index: $widget-z-index;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    img {
+      width: $widget-button-size;
+      height: $widget-button-size;
+      border-radius: 50%;
+      object-fit: cover;
+      background: transparent;
+      display: block;
+      border: none;
+      outline: none;
+    }
+
+    // Стан коли чат відкритий
+    &--hidden {
+      display: none;
+    }
+
+    // Анімація пульсації для сповіщення
+    &--pulse {
+      animation: gwz-pulse 1s ease-in-out 3;
+    }
+  }
+
+  // Червона крапка сповіщення
+  &__notification {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 16px;
+    height: 16px;
+    background: #ff4757;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.3s ease;
+    display: block;
+
+    &--show {
+      transform: scale(1);
+    }
+  }
+
+  // Модальне вікно чату
+  &__modal {
+    position: fixed;
+    bottom: var(--desktop-chat-bottom, 80px);
+    right: var(--desktop-chat-right, 20px);
+    left: var(--desktop-chat-left, auto);
+    top: var(--desktop-chat-top, auto);
+    width: var(--desktop-chat-width, #{$widget-chat-width});
+    height: var(--desktop-chat-height, #{$widget-chat-height});
+    background: transparent;
+    border: 1.76px solid #336C4D;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    transform: scale(0.8) translateY(20px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    display: block;
+    z-index: $widget-z-index + 1;
+
+    &--open {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+  }
+
+  // Заголовок з кнопкою закриття
+  &__header {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    color: #FFFFFF;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    height: 40px;
+    z-index: 10;
+    margin: 0;
+    border: none;
+
+    h3 {
+      display: none;
+    }
+  }
+
+  // Кнопка закриття
+  &__close {
+    position: static;
+    background: none;
+    border: none;
+    color: #FFFFFF;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 0;
+    width: 34px;
+    height: 29px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+    font-weight: normal;
+    margin: 0;
+    outline: none;
+    font-family: inherit;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  // Iframe з чатом
+  &__iframe {
+    position: static;
+    width: 100%;
+    height: $widget-chat-height;
+    border: none;
+    background: transparent;
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+
+  // Спінер завантаження
+  &__spinner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 56, 54, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 16px;
+    z-index: 5;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+    &-icon {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(219, 197, 157, 0.3);
+      border-top: 3px solid $widget-primary-color;
+      border-radius: 50%;
+      animation: gwz-spin 1s linear infinite;
+      display: block;
+      margin: 0;
+      padding: 0;
+      background: transparent;
+    }
+  }
+}
+
+// Анімації
+@keyframes gwz-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes gwz-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+// Мобільна версія
+@media screen and (max-width: 768px) {
+  .gwz-widget {
+    bottom: var(--mobile-button-bottom, 90px);
+    right: var(--mobile-button-right, 10px);
+    left: var(--mobile-button-left, auto);
+    top: var(--mobile-button-top, auto);
+
+    &__button {
+      width: $widget-button-size-mobile;
+      height: $widget-button-size-mobile;
+
+      img {
+        width: $widget-button-size-mobile;
+        height: $widget-button-size-mobile;
+      }
+    }
+
+    &__modal {
+      position: fixed;
+      bottom: var(--mobile-chat-bottom, 80px);
+      right: var(--mobile-chat-right, 10px);
+      left: var(--mobile-chat-left, 10px);
+      top: var(--mobile-chat-top, 20px);
+      width: calc(100vw - 20px);
+      height: calc(100vh - 120px);
+      height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 120px);
+      max-width: calc(100vw - 20px);
+      max-height: calc(100vh - 120px);
+      max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 120px);
+      border-radius: 16px;
+      transform: translateY(100vh);
+      border: 1px solid #336C4D;
+      margin: 0;
+      padding: 0;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      z-index: $widget-z-index;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+
+      &--open {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    &__iframe {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      border: none;
+      border-radius: 16px;
+      margin: 0;
+      padding: 0;
+      position: static;
+      top: auto;
+      left: auto;
+      box-shadow: none;
+    }
+
+    &__header {
+      position: absolute;
+      top: calc(env(safe-area-inset-top) + 10px);
+      right: 10px;
+      z-index: $widget-z-index + 2;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__close {
+      width: 34px;
+      height: 29px;
+      font-size: 20px;
+    }
+
+    &__spinner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      background: rgba(0, 56, 54, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 10;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+// Для старих браузерів без dvh
+@supports not (height: 100dvh) {
+  @media screen and (max-width: 768px) {
+    .gwz-widget {
+      &__modal {
+        height: 100vh;
+        max-height: 100vh;
+        
+        &__iframe {
+          height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 40px);
+          max-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 40px);
+        }
+        
+        &__spinner {
+          height: calc(100vh - 40px);
+        }
+      }
+    }
+  }
+}
+
+// Підключення Google Fonts якщо потрібно
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Lato:wght@300;400;700&display=swap');
