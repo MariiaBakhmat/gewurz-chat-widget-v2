@@ -1,15 +1,29 @@
-// SCSS змінні
+// SCSS змінні з ваших оригінальних файлів
 $widget-z-index: 2147483647;
-$widget-primary-color: #DBC59D;
-$widget-secondary-color: #003836;
+$widget-z-index-modal: 2147483646; // для мобільних
+$widget-z-index-header: 2147483648; // для заголовка на мобільних
 $widget-button-size: 60px;
 $widget-button-size-mobile: 72px;
 $widget-chat-width: 400px;
 $widget-chat-height: 522px;
 
+// Підключення шрифтів
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Lato:wght@300;400;700&display=swap');
+
+// Dialog стилі (з вашого widget.js)
+#topLayer { 
+  border: 0; 
+  padding: 0; 
+  background: transparent; 
+  
+  &::backdrop { 
+    background: transparent; 
+  }
+}
+
 // Головний контейнер віджета
 .gwz-widget {
-  // CSS reset тільки для віджета
+  // CSS reset тільки для віджета (точна копія з widget.js)
   * {
     box-sizing: border-box;
     margin: 0;
@@ -47,7 +61,7 @@ $widget-chat-height: 522px;
     z-index: auto;
   }
 
-  // Базові стилі контейнера
+  // Базові стилі контейнера (точна копія)
   position: fixed;
   bottom: var(--desktop-button-bottom, 60px);
   right: var(--desktop-button-right, 125px);
@@ -72,7 +86,7 @@ $widget-chat-height: 522px;
   overflow: visible;
   transform: none;
 
-  // Кнопка віджета
+  // Кнопка віджета (точна копія з widget.js)
   &__button {
     position: static;
     display: flex;
@@ -114,7 +128,7 @@ $widget-chat-height: 522px;
       outline: none;
     }
 
-    // Стан коли чат відкритий
+    // Стан коли чат відкритий (з вашого CSS)
     &--hidden {
       display: none;
     }
@@ -125,7 +139,7 @@ $widget-chat-height: 522px;
     }
   }
 
-  // Червона крапка сповіщення
+  // Червона крапка сповіщення (точна копія)
   &__notification {
     position: absolute;
     top: -2px;
@@ -143,15 +157,15 @@ $widget-chat-height: 522px;
     }
   }
 
-  // Модальне вікно чату
+  // Модальне вікно чату (точна копія)
   &__modal {
     position: fixed;
     bottom: var(--desktop-chat-bottom, 80px);
     right: var(--desktop-chat-right, 20px);
     left: var(--desktop-chat-left, auto);
     top: var(--desktop-chat-top, auto);
-    width: var(--desktop-chat-width, #{$widget-chat-width});
-    height: var(--desktop-chat-height, #{$widget-chat-height});
+    width: $widget-chat-width;
+    height: $widget-chat-height;
     background: transparent;
     border: 1.76px solid #336C4D;
     border-radius: 16px;
@@ -169,7 +183,7 @@ $widget-chat-height: 522px;
     }
   }
 
-  // Заголовок з кнопкою закриття
+  // Заголовок з кнопкою закриття (точна копія)
   &__header {
     position: absolute;
     top: 10px;
@@ -190,7 +204,7 @@ $widget-chat-height: 522px;
     }
   }
 
-  // Кнопка закриття
+  // Кнопка закриття (точна копія)
   &__close {
     position: static;
     background: none;
@@ -216,7 +230,7 @@ $widget-chat-height: 522px;
     }
   }
 
-  // Iframe з чатом
+  // Iframe з чатом (точна копія)
   &__iframe {
     position: static;
     width: 100%;
@@ -228,7 +242,7 @@ $widget-chat-height: 522px;
     padding: 0;
   }
 
-  // Спінер завантаження
+  // Спінер завантаження (точна копія з widget.js)
   &__spinner {
     position: absolute;
     top: 0;
@@ -252,7 +266,7 @@ $widget-chat-height: 522px;
       width: 40px;
       height: 40px;
       border: 3px solid rgba(219, 197, 157, 0.3);
-      border-top: 3px solid $widget-primary-color;
+      border-top: 3px solid #DBC59D;
       border-radius: 50%;
       animation: gwz-spin 1s linear infinite;
       display: block;
@@ -263,7 +277,7 @@ $widget-chat-height: 522px;
   }
 }
 
-// Анімації
+// Анімації (точна копія з widget.js)
 @keyframes gwz-spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -274,7 +288,7 @@ $widget-chat-height: 522px;
   50% { transform: scale(1.05); }
 }
 
-// Мобільна версія
+// Мобільна версія (точна копія з widget.js)
 @media screen and (max-width: 768px) {
   .gwz-widget {
     bottom: var(--mobile-button-bottom, 90px);
@@ -312,7 +326,7 @@ $widget-chat-height: 522px;
       padding-top: env(safe-area-inset-top);
       padding-bottom: env(safe-area-inset-bottom);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      z-index: $widget-z-index;
+      z-index: $widget-z-index-modal;
       background: transparent;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
@@ -342,7 +356,7 @@ $widget-chat-height: 522px;
       position: absolute;
       top: calc(env(safe-area-inset-top) + 10px);
       right: 10px;
-      z-index: $widget-z-index + 2;
+      z-index: $widget-z-index-header;
       background: rgba(0, 0, 0, 0.3);
       border-radius: 50%;
       width: 34px;
@@ -380,7 +394,31 @@ $widget-chat-height: 522px;
   }
 }
 
-// Для старих браузерів без dvh
+// Додатковий медіа-запит для дуже маленьких екранів (з widget.js)
+@media screen and (max-width: 480px) {
+  .gwz-widget {
+    &__iframe {
+      width: calc(100vw - 16px);
+      height: calc(100vh - 32px);
+      height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 32px);
+      margin: 0px;
+      top: calc(env(safe-area-inset-top) + 8px);
+      left: 8px;
+      border-radius: 16px;
+    }
+
+    &__spinner {
+      top: calc(env(safe-area-inset-top) + 8px);
+      left: 0px;
+      width: calc(100vw - 16px);
+      height: calc(100vh - 32px);
+      height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 32px);
+      border-radius: 16px;
+    }
+  }
+}
+
+// Для старих браузерів без dvh (з widget.js)
 @supports not (height: 100dvh) {
   @media screen and (max-width: 768px) {
     .gwz-widget {
@@ -388,18 +426,15 @@ $widget-chat-height: 522px;
         height: 100vh;
         max-height: 100vh;
         
-        &__iframe {
+        .gwz-widget__iframe {
           height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 40px);
           max-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 40px);
         }
         
-        &__spinner {
+        .gwz-widget__spinner {
           height: calc(100vh - 40px);
         }
       }
     }
   }
 }
-
-// Підключення Google Fonts якщо потрібно
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Lato:wght@300;400;700&display=swap');
